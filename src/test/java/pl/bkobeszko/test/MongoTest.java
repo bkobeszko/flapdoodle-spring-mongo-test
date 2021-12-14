@@ -2,6 +2,7 @@ package pl.bkobeszko.test;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -13,8 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 class MongoTest {
 
+    @Autowired
+    TestRepository repository;
+
     @Test
-    void test(TestRepository repository) {
+    void test() {
         TestEntity entity = new TestEntity();
         entity.setName("test_name");
 
@@ -22,6 +26,6 @@ class MongoTest {
 
         List<TestEntity> found = repository.findAll();
         assertEquals(1, found.size());
-        assertEquals("test_name", found.get(0));
+        assertEquals("test_name", found.get(0).getName());
     }
 }
